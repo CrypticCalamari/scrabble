@@ -1,0 +1,59 @@
+<project name="Scrabble" default="dist">
+	<description>
+		The board game Scrabble and AI to play said board game
+	</description>
+
+	<property name="project" location="com.gatesunder.scrabble"/>
+	<property name="src.main" location="src/main/java/com/gatesunder/scrabble"/>
+	<property name="src.test" location="src/main/java/com/gatesunder/scrabble/test"/>
+	<property name="build" location="build"/>
+	<property name="test" location="test"/>
+	<property name="dist" location="dist"/>
+
+	<!-- ======================== INIT ==================================== -->
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build}"/>
+	</target>
+	<target name="dist">
+		<mkdir dir="${dist}"/>
+	</target>
+	<!-- ================================================================== -->
+
+	
+	<!-- ======================== COMPILE ================================= -->
+	<target name="compile_all" depends="init" description="Compile all java resources">
+		<javac srcdir="${src.main}" destdir="${build}"/>
+	</target>
+	<!-- ================================================================== -->
+
+	<!-- ======================== DIST ==================================== -->
+	<target name="Scrabble" description="Compile, ALL THE THINGS!">
+		<jar jarfile="${dist}/Scrabble_${DSTAMP}.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="com.gatesunder.scrabble.Scrabble"/>
+			</manifest>
+		</jar>
+	</target>
+	<!-- ================================================================== -->
+
+	<!-- ======================== TEST ==================================== -->
+	<target name="test" depends="compile_all">
+		<javac srcdir="${src.test}" destdir="${build}"/>
+		<mkdir dir="${test}"/>
+		<jar jarfile="${test}/scrabble_test_${DSTAMP}.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="com.gatesunder.scrabble.test.TestAll"/>
+			</manifest>
+		</jar>
+	</target>
+	<!-- ================================================================== -->
+
+	<!-- ======================== CLEAN =================================== -->
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${test}"/>
+		<delete dir="${dist}"/>
+	</target>
+	<!-- ================================================================== -->
+</project>
